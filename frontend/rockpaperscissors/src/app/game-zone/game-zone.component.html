@@ -1,0 +1,69 @@
+<div *ngIf="isGameStarted()" class="container">
+  <div class="row row-m-t alert alert-success">
+    <div class="col-md-6 h4 text-success text-left">{{getGameInfo().name}}</div>
+    <div class="col-md-6 text-right">
+        <span *ngFor="let winning of getGameInfo().winning">
+          <span class="white-space: nowrap;"><span class="text-success text-bold">{{winning[0]}}</span> beats <span
+            class="text-danger">{{winning[1]}}</span><span
+            *ngIf="!isLast">; </span></span>
+        </span>
+    </div>
+  </div>
+  <div class="row row-m-t">
+    <div class="col-md-5">
+
+      <div class="row left-pane text-center row-s-t h4">
+        <label *ngFor="let move of getMoves()">
+          <input type="radio" name="moves"
+                 [checked]="move === selectedMove"
+                 (change)="onChange(move)"/>
+          {{move}}
+        </label>
+      </div>
+
+      <div class="row text-center row-s-t">
+        <button class="btn btn-primary align-middle" (click)="charge()" [disabled]="!this.selectedMove">
+          {{getChargeTitle()}}
+        </button>
+      </div>
+
+
+    </div>
+    <div class="col-md-3">
+
+      <div class="row text-center row-s-t">
+        <div class="row h4 align-center">
+          {{getFirst() ? getFirst() : '?'}} : {{getSecond() ? getSecond() : '?'}}
+        </div>
+        <div class="row h3">
+          <div *ngIf="isGeneratedMove()">
+            <span *ngIf="getResult() == 'FIRST_WIN'" class="text-success">You win</span>
+            <span *ngIf="getResult() == 'SECOND_WIN'" class="text-danger">You lost</span>
+          </div>
+          <div *ngIf="!isGeneratedMove()">
+            <span *ngIf="getResult() == 'FIRST_WIN'" class="text-success">First win</span>
+            <span *ngIf="getResult() == 'SECOND_WIN'" class="text-success">Second win</span>
+          </div>
+          <span *ngIf="getResult() == 'DRAW'" class="text-primary">Draw</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-4 text-center">
+      <div class="row h2">
+        <div *ngIf="isGeneratedMove()">
+          <div class="row text-success">{{getStat()[0]}} win</div>
+          <div class="row text-danger">{{getStat()[1]}} lost</div>
+        </div>
+        <div *ngIf="!isGeneratedMove()">
+          <div class="row text-success">{{getStat()[0]}} first win</div>
+          <div class="row text-success">{{getStat()[1]}} second</div>
+        </div>
+        <div class="row text-primary">{{getStat()[2]}} draws</div>
+      </div>
+    </div>
+  </div>
+  <div class="row row-m-t" *ngIf="isGameError()" class="alert alert-danger">
+    {{getGameError()}}
+  </div>
+</div>

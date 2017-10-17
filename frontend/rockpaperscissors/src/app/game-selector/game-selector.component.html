@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="form-group">
+    <div class="row row-m-t text-left">
+      <div class="col-md-4">
+        <label for="game-type">Select type:</label>
+        <select class="form-control" id="game-type" [(ngModel)]="selectedType">
+          <option [value]="notSelected">Select a game type...</option>
+          <option *ngFor="let mode of getTypes()" [value]="mode">{{mode}}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="game-mode">Select mode:</label>
+        <select class="form-control" id="game-mode" [(ngModel)]="selectedMode">
+          <option [value]="notSelected">Select a game mode...</option>
+          <option *ngFor="let mode of getModes()" [value]="mode">{{mode}}</option>
+        </select>
+      </div>
+      <div class="col-md-4 padding-button">
+        <button class="btn btn-primary align-middle" (click)="startNewGame()"
+                [disabled]="selectedType == notSelected || selectedMode == notSelected">Start new game</button>
+      </div>
+    </div>
+  </div>
+
+</div>
